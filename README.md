@@ -15,14 +15,36 @@
 This is a java tool that converts an image to ascii values with a few other options
 
 # Usage
-To use this ASCII converter supply the commands with
+To use this ASCII converter you can either compile the sources using javac
 ```bash
-java ImageToAscii <IMAGE_NAME> [[[int pixel_detail] bool print_to_console] String <OUTPUT_FILENAME>]
+javac ImagetoAscii.java
+java ImageToAscii <IMAGE_NAME> [OPTIONS]
 ```
-All options in [] are optional and have default values if not supplied
-int [pixel_detail]: The higher the pixel_detail, the more pixels are skipped
-e.g. a pixel_detail of default=1 will rastorize the entire image
-whereas a pixel_detail of 2 will rastorize half the image,
-skipping every other pixel
-bool [print_to_console]: This is a boolean so it accepts default='true' or 'false' as values
-String [OUTPUT_FILENAME]: Supply your own filename to save to. default='<IMAGE_NAME>-ascii-version.txt'
+
+or run the precompiled jar file
+```bash
+java -jar ImagetoAscii.jar <IMAGE_NAME> [OPTIONS]
+```
+## OPTIONS
+####pixel-detail
+	-d detail_value
+
+This option changes the density of pixels displayed. The larger the value the fewer pixels are converted. e.g. a value of 1 will rastorize the full image while a value of 2 will rastorize half the image, skipping every other pixel The default value is 1
+
+####output-file
+	-o output_file
+
+When this option is included followed by a name, the program will use the supplied name as the output file. The default value is IMAGE_NAME-ascii-version.txt
+
+####print-to-console
+	-p
+
+When this option is supplied it will print to console as well as to an output file. The default value is false
+
+#Examples
+
+```
+java ImageToAscii Artorias.png -d 5
+```
+
+![Image of Yaktocat] (/Artorias.png)

@@ -16,15 +16,38 @@ public class ImageToAscii {
 	public static void main(String[] args) {
 
 		if (args.length == 0) {
-			System.out.println("To use this ASCII converter supply the commands with\n");
-			System.out.println("	java ImageToAscii <IMAGE_NAME> [[[int pixel_detail] bool print_to_console] String <OUTPUT_FILENAME>]\n");
-			System.out.println("All options in [] are optional and have default values if not supplied\n");
-			System.out.println("int [pixel_detail]: The higher the pixel_detail, the more pixels are skipped");
-			System.out.println("e.g. a pixel_detail of default=1 will rastorize the entire image");
-			System.out.println("whereas a pixel_detail of 2 will rastorize half the image,");
-			System.out.println("skipping every other pixel\n");
-			System.out.println("bool [print_to_console]: This is a boolean so it accepts default='true' or 'false' as values\n");
-			System.out.println("String [OUTPUT_FILENAME]: Supply your own filename to save to. default='<IMAGE_NAME>-ascii-version.txt\n'");
+			System.out.println("# Usage");
+			System.out.println("To use this ASCII converter you can either compile the sources using javac");
+			System.out.println();
+			System.out.println("	javac ImagetoAscii.java");
+			System.out.println("	java ImageToAscii <IMAGE_NAME> [OPTIONS]");
+			System.out.println();
+			System.out.println("");
+			System.out.println("or run the precompiled jar file");
+			System.out.println();
+			System.out.println("	java -jar ImagetoAscii.jar <IMAGE_NAME> [OPTIONS]");
+			System.out.println();
+			System.out.println("## OPTIONS");
+			System.out.println("####pixel-detail");
+			System.out.println("	-d detail_value");
+			System.out.println("");
+			System.out.println("This option changes the density of pixels displayed. The larger the value the fewer pixels are converted. e.g. a value of 1 will rastorize the full image while a value of 2 will rastorize half the image, skipping every other pixel The default value is 1");
+			System.out.println("");
+			System.out.println("####output-file");
+			System.out.println("	-o output_file");
+			System.out.println("");
+			System.out.println("When this option is included followed by a name, the program will use the supplied name as the output file. The default value is IMAGE_NAME-ascii-version.txt");
+			System.out.println("");
+			System.out.println("####print-to-console");
+			System.out.println("	-p");
+			System.out.println("");
+			System.out.println("When this option is supplied it will print to console as well as to an output file. The default value is false");
+			System.out.println("");
+			System.out.println("#Examples");
+			System.out.println("");
+			System.out.println();
+			System.out.println("java ImageToAscii Artorias.png ");
+			System.out.println();
 			System.exit(0);
 		}
 
@@ -33,15 +56,23 @@ public class ImageToAscii {
 		char[] btw = "@%#*+=-:. ".toCharArray();
 		String filename = args[0];
 		int pixelDetail = 1;
-		boolean printToConsole = true;
+		boolean printToConsole = false;
 		String outputFileName = filename.substring(0, filename.toCharArray().length - 4) + "-ascii-version.txt";
 
-		if (args.length >= 2 && !args[1].equals("0"))
-			pixelDetail = Integer.parseInt(args[1]);
-		if (args.length >=3 && (args[2].equals("true") || args[2].equals("false")))
-			printToConsole = args[2].equals("true") ? true : false;
-		if (args.length >=4)
-			outputFileName = args[3];
+		for (int i = 1; i < args.length; i++) {
+			if (args[i].matches("-(.*)p(.*)"))
+				printToConsole = true;
+			if (args[i].matches("-(.*)d(.*)o(.*)")) {
+				pixelDetail = Integer.parseInt(args[i+1]);
+				outputFileName = args[i+2];
+			} else if (args[i].matches("-(.*)o(.*)d(.*)")) {
+				pixelDetail = Integer.parseInt(args[i+2]);
+				outputFileName = args[i+1];
+			} else if (args[i].matches("-(.*)d(.*)"))
+				pixelDetail = Integer.parseInt(args[i+1]);
+			else if (args[i].matches("-(.*)o(.*)"))
+				outputFileName = args[i+1];
+		}
 
 		// Read the image into a buffered image
 		BufferedImage colorImage = null;
