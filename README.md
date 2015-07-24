@@ -44,7 +44,7 @@ When this option is supplied it will print to console as well as to an output fi
 #Examples
 
 ```
-java ImageToAscii Artorias.png -d 5
+java ImageToAscii Artorias.png
 ```
 
-![Image of Yaktocat] (/Artorias.png)
+![Image of Artorias](/Artorias.png) ![Artorias Ascii Version](/Artorias-ascii-version.png)
