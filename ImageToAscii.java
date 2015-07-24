@@ -52,8 +52,8 @@ public class ImageToAscii {
 		}
 
 		// Ascii character to pixel conversion array. Pixels will correspond to a certain character in this array
-		// char[] btw = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'. ".toCharArray();
-		char[] btw = "@%#*+=-:. ".toCharArray();
+		char[] btw = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'. ".toCharArray();
+		// char[] btw = "@%&#0*|?+=-!:\". ".toCharArray();
 		String filename = args[0];
 		int pixelDetail = 1;
 		boolean printToConsole = false;
@@ -120,9 +120,9 @@ public class ImageToAscii {
 		for (int i = 0; i < height; i+=pixelDetail) {
 			for (int j = 0; j < width; j+=pixelDetail) {
 				// Write out the converted pixel to the file and optionally to the console
-				writer.print(" " + handleSinglePixel(bimage.getRGB(j, i), btw));
+				writer.print(handleSinglePixel(bimage.getRGB(j, i), btw) + "" + handleSinglePixel(bimage.getRGB(j, i), btw));
 				if (printToConsole)
-					System.out.print(" " + handleSinglePixel(bimage.getRGB(j, i), btw));
+					System.out.print(handleSinglePixel(bimage.getRGB(j, i), btw) + "" + handleSinglePixel(bimage.getRGB(j, i), btw));
 			}
 			if (printToConsole)
 				System.out.println();
@@ -150,6 +150,6 @@ public class ImageToAscii {
 
       	// Otherwise we'll return the character in the array that corresponds to the certain pixel
       	// The farther left, the total absence (black), the farther right the total presence (white)
-      	return btw[(red*btw.length/256)%btw.length];
+      	return btw[(int)Math.floor(red*btw.length/256.0f)];
  	}
 }
